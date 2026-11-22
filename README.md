@@ -2,7 +2,7 @@
 
 ## References
 
-* [Maffez Synth Mods 2600](https://maffez.com/?page_id=1473) - experimental modding guide to Barp 2600 most of my modes are implementations of ideas in that doc. Kudos!
+* [Maffez Synth Mods 2600](https://maffez.com/?page_id=1473) - experimental modding guide to Barp 2600 most of my modes are implementations of ideas in that doc. Please read it first.
 * [Creative Inquiry ARP 2600](https://github.com/CreativeInquiry/ARP-2600) - Lot of information about original including two different service manuals.
 
 ## Things to consider before mods
@@ -34,6 +34,11 @@ There are several ways how to control Gate and Trig on Barp 2600:
 
 Mod is to tap between CPU and base of triggering transistor (NPN, 468). That gate is usual CPU -> NPN -> PNP -> LOAD.
 
+Requires:
+1. Socket
+1. ~~2k2~~ 1k5
+1. 2 x 4001 diodes
+
 ![Soldering points on board](img/gate-trig-board.jpg)
 ![Soldered wires](img/gate-trig-board-soldered.jpg)
 ![Schematics](img/gate-trig-schematics.png)
@@ -50,10 +55,95 @@ Schematics is like: CPU CV out -> R408 (R100) -> buffer -> CVs
 Mod is well described in Maffez guide, it requires normallised socket i.e. one that has Tip - Norm connection if there is no jack in socket.
 1. Remove R100
 1. Solder wires to top / bottom terminals
-    1. Top terminal -> R100 -> Norm connector
-    2. Botoom terminal -> Tip connector
+    1. Top terminal -> R100 -> Norm
+    2. Botoom terminal -> Tip
 1. Ring goes to ground
+
+Requires:
+1. Normalized socket
+1. R100
 
 ![CV Soldering Points](img/cv-soldering-point.jpg)
 
+### Filter Input Boost/Drive
 
+Switch with R50k-100k (I'm thinking R74k) in parallel to R191
+
+Requires:
+1. Switch
+1. R74k
+
+### Filter pre input drive
+
+Connect pin 1 of IC 20 (output of LM4580 ch 1) to 1uf (-> 470k gnd) -> Tip, Ring -> Ground.
+
+1. Socket
+2. 1uf cap
+3. 470k
+
+### Filter 6db, 12db taps
+
+I need to study more but differetial pair is nice with opamp
+
+(- C -) -> 1uf 100k gnd -> (-) TL072 (+- 15v) -> (FB 100k -> (-)) -> 1k -> socket
+(- C -) -> 1uf 100k gnd -> (100k -> gnd) -> (+) TL072
+
+Requires(Per Tap):
+1. Socket
+1. 2 x 1uf
+1. 4 x 100k
+1. 1 x 1k
+1. TL072
+
+### VCA Input Boost/Drive
+
+VCA in1 is R447 100k. VCA in2 is R448 also 100k. DPDT with two 150k resisters would make it.
+
+Requires:
+1. DPDT
+1. 2x150k
+
+### Buffered mult
+
+B2600 mult is unbuffered. One can do it with stacking cables. One TL072 could serve two batches of multiples. My plan is to convert current into buffered and add one more 1 in 2 out buffered mult.
+
+### Attenuated CV VCA
+
+One of the things 2600 is lacking is ka*b like signal processing aka controlled vca. TL072, LM1370 or LM3080 and 2N3906. There are plenty examples like:
+* [https://elecschem.com/lm13700-vca-schematic]
+* [https://github.com/benjiaomodular/MiniVCA]
+* [https://electricdruid.net/design-a-eurorack-vintage-vca-with-the-lm13700/]
+* [https://www.geocities.ws/dhar2kma/vca.htm]
+* [https://www.reddit.com/r/modular/comments/wrwzlg/comment/ikymabz/]
+
+Main Inp, CV Inp + Knob => Output
+
+## Considerations
+
+### Effect Send/Return
+
+I'm still thinking how to do it better.
+My idea is to use mixer out as send, then reuse reverb out socket + additional socket as return and route them thru sliders. This way one can use slider to control mixing in amount. Would it make sense to add knob for attenuating send?
+
+### LFO Reset/Syn
+
+It would be nice to at least reset lfo based on tempo but some of eurorack sequencers are supporting lfos
+
+### Env 3
+
+AR and ADSR is not enough, altho it's easier to solve with external eurorack
+
+### Two filters at once
+
+In theory it's possible to rewire resonance chain for 4072 and get signal from opamp.
+
+### Mutimode filter
+
+It's nice to have something like [https://github.com/kassu/kassutronics/blob/master/documentation/KS-20%20VCF/Kassutronics_KS-20_Build_Docs_1.1B.pdf]
+But it's more realistic to do something with 4072 like rewire resonance and invert against input
+
+## Secrets and Hacks
+
+### Highpass / Bandpass
+
+Dragons
