@@ -2,7 +2,7 @@
 
 ## References
 
-* [Maffez Synth Mods 2600](https://maffez.com/?page_id=1473) - experimental modding guide to Barp 2600 most of my modes are implementations of ideas in that doc. Please read it first.
+* [Maffez Synth Mods 2600](https://maffez.com/?page_id=1473) - experimental guide to Barp 2600 modding. Most of my modes are implementations of ideas from that doc. Please read it first.
 * [Creative Inquiry ARP 2600](https://github.com/CreativeInquiry/ARP-2600) - Lot of information about original including two different service manuals.
 
 ## Things to consider before mods
@@ -18,8 +18,8 @@
     1. Solder opposite side of wires to socket/switch/resisters/etc
     1. Drill panel
 
-I use [right angle mono jacks from Synthrotek](https://store.synthrotek.com/3_point_5mm_angle_mono_audio_jack)
-because they are fitting nicely between panel and board, basically they are about hight of metalic stands/og
+I use [right angle mono jack socket from Synthrotek](https://store.synthrotek.com/3_point_5mm_angle_mono_audio_jack)
+because they are fitting nicely between panel and board, basically they are about haight of metallic stands/behringer's
 socket shoulders.
 
 ## Description of mods
@@ -30,7 +30,7 @@ There are several ways how to control Gate and Trig on Barp 2600:
 
 1. VIA Gate/Trig sockets (when switch under AR Gate label is up). They are working with standard 5v, but AR (~lag generator) is not charged enough. Requires additional 1 in 2 outs cable. One can see difference between manual trig and 5v.
 1. VIA S/H Clock break in. Works with regular cable. Has the same problem of 5v is not enough.
-1. VIA Midi. Ok on Gearspace, bannable offence on Modwiggler.
+1. VIA Midi. Ok on Gearspace, bannable offense on Modwiggler.
 
 Mod is to tap between CPU and base of triggering transistor (NPN, 468). That gate is usual CPU -> NPN -> PNP -> LOAD.
 
@@ -47,16 +47,16 @@ Requires:
 
 There are two ways how to control CV on Barp:
 
-1. Via CV sockets. Requrires at max 1 in 4 out cable (uff): OSC1-3 and Filter.
+1. Via CV sockets. Requires at max 1 in 4 out cable (uff): OSC1-3 and Filter.
 2. Via Midi. Actually it's allowed on MW because of Portamento and Pitch Bend support. Search for "Behringer 2600 pitch bend range sysex".
 
 Schematics is like: CPU CV out -> R408 (R100) -> buffer -> CVs
 
-Mod is well described in Maffez guide, it requires normallised socket i.e. one that has Tip - Norm connection if there is no jack in socket.
+Mod is well described in Maffez guide, it requires normalized socket i.e. one that has Tip - Norm connection if there is no jack in socket.
 1. Remove R100
 1. Solder wires to top / bottom terminals
     1. Top terminal -> R100 -> Norm
-    2. Botoom terminal -> Tip
+    2. Bottom terminal -> Tip
 1. Ring goes to ground
 
 Requires:
@@ -83,7 +83,7 @@ Connect pin 1 of IC 20 (output of LM4580 ch 1) to 1uf (-> 470k gnd) -> Tip, Ring
 
 ### Filter 6db, 12db taps
 
-I need to study more but differetial pair is nice with opamp
+I need to study more but differential pair is nice with opamp
 
 (- C -) -> 1uf 100k gnd -> (-) TL072 (+- 15v) -> (FB 100k -> (-)) -> 1k -> socket
 (- C -) -> 1uf 100k gnd -> (100k -> gnd) -> (+) TL072
