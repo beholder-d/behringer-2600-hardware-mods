@@ -73,8 +73,9 @@ Requires:
 1. Switch
 1. R74k
 
-### Filter pre input drive
+### Pre-Filter Sum output
 
+Useful for summation with Filter Output in order to create HP/BP.
 Connect pin 1 of IC 20 (output of LM4580 ch 1) to 1uf (-> 470k gnd) -> Tip, Ring -> Ground.
 
 1. Socket
@@ -133,9 +134,10 @@ It would be nice to at least reset lfo based on tempo but some of eurorack seque
 
 AR and ADSR is not enough, altho it's easier to solve with external eurorack
 
-### Two filters at once
+### Two filters simoultaneously
 
-In theory it's possible to rewire resonance chain for 4072 and get signal from opamp.
+I like 4012 way more than 4072. In theory it's possible to rewire resonance chain for 4072 and for complete separation.
+This mod may be big as it requires Reso chan + pot, CV offset pot, separate output
 
 ### Mutimode filter
 
